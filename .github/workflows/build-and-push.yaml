@@ -6,6 +6,9 @@ on:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    outputs:
+      ansible-eda-base-image: ${{ steps.changes.outputs.ansible-eda-base-image }}
+      ansible-eda: ${{ steps.changes.outputs.ansible-eda }}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
