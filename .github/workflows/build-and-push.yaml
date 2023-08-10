@@ -7,8 +7,8 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      src: ${{ steps.changes.outputs.src }}
-      infra: ${{ steps.changes.outputs.infra }}
+      ansible-eda-base-image: ${{ steps.changes.outputs.src }}
+      ansible-eda: ${{ steps.changes.outputs.infra }}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2

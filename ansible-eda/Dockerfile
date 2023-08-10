@@ -10,3 +10,4 @@ COPY k8s-eda-playbook-mail.yml /eda-ansible/k8s-eda-playbook-mail.yml
 EXPOSE 5001
 
 CMD ["ansible-rulebook", "--rulebook", "k8s-eda-rule.yml", "-i", "inventory", "--verbose"]
+
