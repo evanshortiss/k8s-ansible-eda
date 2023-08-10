@@ -18,9 +18,10 @@ jobs:
 
     - name: Buildah Action
       uses: redhat-actions/buildah-build@v2
+      id: build-image
       with:
         image: quay.io/rhdevelopers/k8s-ansible-eda
-        tags: mail mail-${{ github.sha }}
+        tags: mail
         platforms: linux/amd64,linux/arm64
         context: ./ansible-eda
         containerfiles: ./ansible-eda/Dockerfile
