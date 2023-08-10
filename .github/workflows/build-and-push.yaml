@@ -1,0 +1,39 @@
+name: Build Mailer Image using Containerfile
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install qemu dependency
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qemu-user-static
+
+    - name: Buildah Action
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: quay.io/rhdevelopers/k8s-ansible-eda:mail 
+        tags: mail mail-${{ github.sha }}
+        platforms: linux/amd64,linux/arm64
+        context: ./ansible-eda
+        containerfiles: Dockerfile
+
+    - name: Push To quay.io
+      id: push-to-quay
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-image.outputs.image }}
+        tags: ${{ steps.build-image.outputs.tags }}
+        registry: quay.io/rhdevelopers
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD
+
+    - name: Print image url
+      run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
