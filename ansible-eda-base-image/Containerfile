@@ -9,3 +9,4 @@ RUN microdnf install java-17 python3 gcc python3-devel -y && microdnf clean all 
 ENV JAVA_HOME="/usr/lib/jvm/jre-17"
 
 RUN ansible-galaxy collection install community.general ansible.eda kubernetes.core sabre1041.eda
+
