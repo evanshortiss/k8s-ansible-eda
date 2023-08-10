@@ -22,7 +22,7 @@ jobs:
         image: quay.io/rhdevelopers/k8s-ansible-eda
         tags: mail mail-${{ github.sha }}
         platforms: linux/amd64,linux/arm64
-        context: ansible-eda/
+        # context: ansible-eda/
         containerfiles: Dockerfile
 
     - name: Push To quay.io
