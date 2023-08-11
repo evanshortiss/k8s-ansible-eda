@@ -34,7 +34,7 @@ jobs:
         image: k8s-ansible-eda
         tags: legacy
         platforms: linux/amd64
-        context: ./legacy
+        context: ./ansible-eda
         containerfiles: ./legacy/Dockerfile
 
     - name: Echo Build Outputs
