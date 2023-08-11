@@ -17,6 +17,7 @@ jobs:
         filters: |
           legacy:
             - 'legacy/**'
+            - 'ansible-eda/**'
 
   build-image:
     name: Build Legacy EDA k8s Image
