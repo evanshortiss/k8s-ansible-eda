@@ -2,6 +2,8 @@ FROM registry.access.redhat.com/ubi9-minimal
 RUN microdnf install java-17 python3 gcc python3-devel -y && microdnf clean all && python -m ensurepip --upgrade && pip3 install ansible ansible-rulebook asyncio aiokafka aiohttp aiosignal kubernetes requests ansible-runner wheel
 ENV JAVA_HOME="/usr/lib/jvm/jre-17"
 RUN mkdir /eda-ansible
+RUN mkdir /.ansible/
+RUN chown root:root /.ansible
 
 RUN ansible-galaxy collection install community.general ansible.eda kubernetes.core sabre1041.eda
 
