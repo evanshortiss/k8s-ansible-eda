@@ -37,7 +37,7 @@ jobs:
         image: ansible-eda-base
         tags: latest ${{ github.sha }}
         platforms: linux/amd64
-        context: ./ansible-eda
+        context: ./ansible-eda-base-image
         containerfiles: ./ansible-eda-base-image/Containerfile
 
     - name: Echo Build Outputs
