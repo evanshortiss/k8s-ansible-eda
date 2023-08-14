@@ -30,11 +30,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install qemu dependency
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y qemu-user-static
-
     - name: Buildah Action
       uses: redhat-actions/buildah-build@v2
       id: build-image
@@ -73,11 +68,6 @@ jobs:
     if: ${{ (needs.changes.outputs.ansible-eda-base-image == 'true') || (needs.changes.outputs.ansible-eda == 'true') || (github.event_name == 'workflow_dispatch') }}
     steps:
     - uses: actions/checkout@v3
-
-    - name: Install qemu dependency
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y qemu-user-static
 
     - name: Buildah Action
       uses: redhat-actions/buildah-build@v2
