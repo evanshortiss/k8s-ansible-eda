@@ -34,7 +34,7 @@ jobs:
       with:
         image: k8s-ansible-eda
         tags: legacy
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64
         context: ./ansible-eda
         containerfiles: ./legacy/Dockerfile
 

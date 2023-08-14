@@ -40,7 +40,7 @@ jobs:
       with:
         image: ansible-eda-base
         tags: latest ${{ github.sha }}
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64
         context: ./ansible-eda-base-image
         containerfiles: ./ansible-eda-base-image/Containerfile
 
@@ -84,7 +84,7 @@ jobs:
       with:
         image: k8s-ansible-eda
         tags: mail
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64
         context: ./ansible-eda
         containerfiles: ./ansible-eda/Dockerfile
 
