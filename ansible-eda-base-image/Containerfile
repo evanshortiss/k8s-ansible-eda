@@ -14,6 +14,8 @@ RUN groupadd --gid 1001 ansible \
 
 # Make a tmp dir for Ansible to avoid permission issues on OpenShift
 RUN mkdir -p /home/ansible/.ansible-tmp
+RUN chown -R 1001:0 /home/ansible/.ansible-tmp && \
+    chmod -R ug+rwx /home/ansible/.ansible-tmp
 
 # Copy in a base Ansible config to avoid issues with tmp dir permissions
 COPY --chown=1001:1001 ansible.cfg /home/ansible/.ansible/ansible.cfg
