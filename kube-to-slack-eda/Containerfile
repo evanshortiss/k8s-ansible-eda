@@ -13,13 +13,13 @@ RUN chown -R 1001:0 /home/ansible && \
 USER ansible
 
 WORKDIR /eda-ansible
-COPY --chown=1001:1001 ./ansible/rule.yml /eda-ansible/rule.yml
+COPY --chown=1001:1001 ./ansible/rule.yaml /eda-ansible/rule.yaml
 COPY --chown=1001:1001 ./ansible/inventory /eda-ansible/inventory
-COPY --chown=1001:1001 ./ansible/playbook.to-slack.yml /eda-ansible/playbook.to-slack.yml
-COPY --chown=1001:1001 ./ansible/playbook.to-stdout.yml /eda-ansible/playbook.to-stdout.yml
+COPY --chown=1001:1001 ./ansible/playbook.to-slack.yaml /eda-ansible/playbook.to-slack.yaml
+COPY --chown=1001:1001 ./ansible/playbook.to-stdout.yaml /eda-ansible/playbook.to-stdout.yaml
 
 EXPOSE 5001
 
 # Start the rulebook process with the given rule.yaml and make the
 # specified environment variables available the rule.yaml
-CMD ansible-rulebook --rulebook rule.yml -i inventory --env-vars WATCHED_NS -vvv
+CMD ansible-rulebook --rulebook rule.yaml -i inventory --env-vars WATCHED_NS -vvv
