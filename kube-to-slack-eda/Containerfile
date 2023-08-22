@@ -13,8 +13,8 @@ RUN chown -R 1001:0 /home/ansible && \
 USER ansible
 
 WORKDIR /eda-ansible
-COPY --chown=1001:1001 ./ansible/inventory /eda-ansible/inventory
 COPY --chown=1001:1001 ./ansible/rule.yml /eda-ansible/rule.yml
+COPY --chown=1001:1001 ./ansible/inventory /eda-ansible/inventory
 COPY --chown=1001:1001 ./ansible/playbook.to-slack.yml /eda-ansible/playbook.to-slack.yml
 COPY --chown=1001:1001 ./ansible/playbook.to-stdout.yml /eda-ansible/playbook.to-stdout.yml
 
