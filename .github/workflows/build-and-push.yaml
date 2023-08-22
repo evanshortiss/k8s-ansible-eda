@@ -1,4 +1,4 @@
-name: Build Mailer Image using Containerfile
+name: Build Images using Containerfile
 on:
   workflow_dispatch:
   push:
@@ -21,7 +21,7 @@ jobs:
               - 'ansible-eda-base-image/**'
             ansible-eda:
               - 'ansible-eda/**'
-            kube-to-slack-eda
+            kube-to-slack-eda:
               - 'kube-to-slack-eda/**'
 
   build-base-image:
