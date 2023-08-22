@@ -1,0 +1,12 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Send resource status to Slack
+      community.general.slack:
+        token: "{{ ansible_env.SLACK_TOKEN }}"
+        msg: "[{{ ansible_eda.event.type }}] {{ ansible_eda.event.resource.kind }} named `{{ ansible_eda.event.resource.metadata.name}}` in the `{{ ansible_eda.event.resource.metadata.namespace}}` namespace at {{ ansible_eda.event.meta.received_at }}:\n```\n{{ansible_eda.event.meta | to_json }}\n```"
+      delegate_to: localhost
+
+
+
+

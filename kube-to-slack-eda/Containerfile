@@ -1,0 +1,25 @@
+FROM quay.io/rhdevelopers/ansible-eda-base:latest
+
+RUN ansible-galaxy collection install community.general ansible.eda kubernetes.core sabre1041.eda
+
+ENV WATCHED_NS k8seda
+
+# Set permissions to support arbitrary user IDs used by OpenShift:
+# https://docs.openshift.com/container-platform/4.13/openshift_images/create-images.html#use-uid_create-images
+USER root
+RUN chown -R 1001:0 /home/ansible && \
+    chmod -R ug+rwx /home/ansible
+
+USER ansible
+
+WORKDIR /eda-ansible
+COPY --chown=1001:1001 ansible/inventory /eda-ansible/inventory
+COPY --chown=1001:1001 ansible/rule.yml /eda-ansible/k8s-eda-rule.yml
+COPY --chown=1001:1001 ansible/playbook.to-slack.yml /eda-ansible/playbook.to-slack.yml
+COPY --chown=1001:1001 ansible/playbook.to-stdout.yml /eda-ansible/playbook.to-stdout.yml
+
+EXPOSE 5001
+
+# Start the rulebook process with the given rule.yaml and make the
+# specified environment variables available the rule.yaml
+CMD ansible-rulebook --rulebook rule.yml -i inventory --env-vars WATCHED_NS -vvv

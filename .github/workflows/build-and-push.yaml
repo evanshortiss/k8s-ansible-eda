@@ -10,6 +10,7 @@ jobs:
     outputs:
       ansible-eda-base-image: ${{ steps.changes.outputs.ansible-eda-base-image }}
       ansible-eda: ${{ steps.changes.outputs.ansible-eda }}
+      kube-to-slack-eda: ${{ steps.changes.outputs.kube-to-slack-eda }}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -20,6 +21,8 @@ jobs:
             - 'ansible-eda-base-image/**'
           ansible-eda:
             - 'ansible-eda/**'
+          kube-to-slack-eda
+            - 'kube-to-slack-eda/**'
 
   build-base-image:
     name: Build EDA Base Image
@@ -61,7 +64,7 @@ jobs:
 
 
   build-eda-image:
-    name: Build EDA k8s Image
+    name: Build EDA Mail Image
     runs-on: ubuntu-latest
     needs: build-base-image
 
@@ -78,6 +81,44 @@ jobs:
         platforms: linux/amd64
         context: ./ansible-eda
         containerfiles: ./ansible-eda/Dockerfile
+
+    - name: Echo Build Outputs
+      run: |
+        echo "Image: ${{ steps.build-image.outputs.image }}"
+        echo "Tags: ${{ steps.build-image.outputs.tags }}"
+        echo "Tagged Image: ${{ steps.build-image.outputs.image-with-tag }}"
+
+    - name: Push To quay.io
+      id: push-to-quay
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-image.outputs.image }}
+        tags: ${{ steps.build-image.outputs.tags }}
+        registry: quay.io/rhdevelopers
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}
+
+    - name: Print image url
+      run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
+
+  build-eda-slack-image:
+    name: Build EDA Slack Image
+    runs-on: ubuntu-latest
+    needs: build-base-image
+
+    if: ${{ (needs.changes.outputs.ansible-eda-base-image == 'true') || (needs.changes.outputs.kube-to-slack-eda == 'true') || (github.event_name == 'workflow_dispatch') }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Buildah Action
+      uses: redhat-actions/buildah-build@v2
+      id: build-image
+      with:
+        image: k8s-ansible-eda
+        tags: slack
+        platforms: linux/amd64
+        context: ./kube-to-slack-eda
+        containerfiles: ./kube-to-slack-eda/Containerfile
 
     - name: Echo Build Outputs
       run: |
