@@ -2,7 +2,7 @@ FROM quay.io/rhdevelopers/ansible-eda-base:latest
 
 RUN ansible-galaxy collection install community.general ansible.eda kubernetes.core sabre1041.eda
 
-ENV WATCHED_NS k8seda
+ENV WATCHED_NS eda-slack
 
 # Set permissions to support arbitrary user IDs used by OpenShift:
 # https://docs.openshift.com/container-platform/4.13/openshift_images/create-images.html#use-uid_create-images
