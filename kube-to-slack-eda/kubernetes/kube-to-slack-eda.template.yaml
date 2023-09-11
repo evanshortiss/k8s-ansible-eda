@@ -78,6 +78,8 @@ objects:
             - env:
                 - name: WATCHED_NS
                   value: ${WATCHED_NS}
+                - name: SLACK_TOKEN
+                  value: ${SLACK_TOKEN}
                 - name: KUBERNETES_NAMESPACE
                   valueFrom:
                     fieldRef:

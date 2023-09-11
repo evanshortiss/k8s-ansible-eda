@@ -4,13 +4,11 @@
   sources:
     - sabre1041.eda.k8s:
         kind: Deployment
-        # namespace: "{{ WATCHED_NS }}"
-        namespace: "eda-slack"
+        namespace: "{{ WATCHED_NS }}"
     - sabre1041.eda.k8s:
         kind: ConfigMap
         api_version: v1
-        # namespace: "{{ WATCHED_NS }}"
-        namespace: "eda-slack"
+        namespace: "{{ WATCHED_NS }}"
   rules:
     - name: Send Update to Slack
       condition: event.type != "MODIFIED" and event.resource.kind != "Deployment"
@@ -20,7 +18,7 @@
         # - print_event:
         #     pretty: true
     - name: Send Update to stdout
-      condition: event.type != "MODIFIED" and event.resource.kind == "Deployment"
+      condition: event.resource.kind == "Deployment"
       actions:
         - run_playbook:
             name: playbook.to-stdout.yaml
