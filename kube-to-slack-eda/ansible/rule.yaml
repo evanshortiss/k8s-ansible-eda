@@ -13,16 +13,16 @@
         namespace: eda-slack
   rules:
     - name: Send Update to Slack
-      condition: event.type != "MODIFIED" and event.resource.kind != "Deployment"
+      condition: event.resource.kind != "Deployment"
       actions:
         - run_playbook:
             name: playbook.to-slack.yaml
         # - print_event:
         #     pretty: true
-    - name: Send Update to stdout
-      condition: event.resource.kind == "Deployment"
-      actions:
-        - run_playbook:
-            name: playbook.to-stdout.yaml
-        # - print_event:
-        #     pretty: true
+    # - name: Send Update to stdout
+    #   condition: event.resource.kind == "Deployment"
+    #   actions:
+    #     - run_playbook:
+    #         name: playbook.to-stdout.yaml
+    #     - print_event:
+    #         pretty: true
