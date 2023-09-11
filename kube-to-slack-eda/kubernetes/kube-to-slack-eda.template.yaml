@@ -59,6 +59,7 @@ objects:
       labels:
         app.kubernetes.io/version: 1.0.0
         app.kubernetes.io/name: ansible-eda
+        app.openshift.io/runtime: ansible
       name: ansible-eda
       namespace: ${NAMESPACE}
     spec:
